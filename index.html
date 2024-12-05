@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Music Player</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      text-align: center;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px 0;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+    .player-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+    }
+    .gramophone {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 20px;
+    }
+    .gramophone img {
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+    }
+    .record {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: black;
+      z-index: 2;
+      animation: spin 0s linear infinite;
+    }
+    .record.playing {
+      animation: spin 3s linear infinite;
+    }
+    @keyframes spin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+    .audio-player {
+      width: 80%;
+      max-width: 500px;
+    }
+    .song-list {
+      margin-top: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .song-item {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .song-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎵 Vintage Music Player 🎶</h1>
+  </header>
+  <div class="player-container">
+    <div class="gramophone">
+      <img src="gramophone.png" alt="Gramophone">
+      <div class="record"></div>
+    </div>
+    <audio class="audio-player" controls loop>
+      <source id="audio-source" src="song1.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  <div class="song-list">
+    <div class="song-item" onclick="playSong('sonisoni.mp3')">🎵 Soni Soni</div>
+    <div class="song-item" onclick="playSong('relaxmusic.mp3')">🎵 Relax</div>
+    <div class="song-item" onclick="playSong('focus.mp3')">🎵 Piano</div>
+  </div>
+  <footer>
+    &copy; 2024 Vintage Music Player. All rights reserved.
+  </footer>
+  <script>
+    const audioPlayer = document.querySelector('.audio-player');
+    const audioSource = document.getElementById('audio-source');
+    const record = document.querySelector('.record');
+
+    // Function to play a selected song
+    function playSong(song) {
+      audioSource.src = song;
+      audioPlayer.load();
+      audioPlayer.play();
+      record.classList.add('playing');
+    }
+
+    // Event listener to toggle record animation based on playback
+    audioPlayer.addEventListener('play', () => {
+      record.classList.add('playing');
+    });
+
+    audioPlayer.addEventListener('pause', () => {
+      record.classList.remove('playing');
+    });
+
+    audioPlayer.addEventListener('ended', () => {
+      record.classList.remove('playing');
+    });
+  </script>
+</body>
+</html>
